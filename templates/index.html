@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Tasty Eats</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>  
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+    </head>
+    <body>
+        <h1>Tasty Foods</h1>
+        <br>
+        {% for message in get_flashed_messages() %}
+            <p> {{message}} </p>
+        {% endfor %}
+        <form action="search" method="post">
+            <input type="text" id="user_input" name="user_input">
+            <input type="submit" value="GET RECIPES" id="get_recipes">
+        </form>
+        <div>
+            <p>{{resultsHeader}}</p>
+            {% for message in results %}
+                <p> {{message}} </p>
+            {% endfor %}
+        </div>
+        <script>
+            $( function() {
+                $.ajax({
+                    url: '{{ url_for("autocomplete") }}'
+                }).done(function (data) {
+                    $('#user_input').autocomplete({
+                        source: function(request, response) {
+                            var results = $.ui.autocomplete.filter(data, request.term);
+
+                            response(results.slice(0, 5))
+                        }
+                    })
+                })
+            });
+        </script> 
+    </body>
+</html>
