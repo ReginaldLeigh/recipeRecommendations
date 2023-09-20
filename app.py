@@ -11,9 +11,9 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key=os.getenv('FLASK_SECRET')
 
-
-clean_data = get_datasets(os.getenv('AWS_ACCESS_KEY_ID'), os.getenv('AWS_SECRET_ACCESS_KEY'))[0]
-feature_matrix = get_datasets(os.getenv('AWS_ACCESS_KEY_ID'), os.getenv('AWS_SECRET_ACCESS_KEY'))[1]
+datasets=get_datasets(os.getenv('AWS_ACCESS_KEY_ID'), os.getenv('AWS_SECRET_ACCESS_KEY'))
+clean_data = datasets[0]
+feature_matrix = datasets[1]
 
 
 @app.route("/", methods=['POST', 'GET'])
