@@ -20,9 +20,14 @@
             <br>
             <input type="submit" value="GET RECIPES" id="get_recipes">
         </form>
-        <div>
+        <div class="grid-container" style="visibility: {{ visibility }}";>
+            <div class="grid-item">Recipe ID</div>
+            <div class="grid-item">Name</div>
+            <div class="grid-item">Score</div>
             {% for message in results %}
-                <p> {{message}} </p>
+                <div class="grid-item"> {{message.recipe_id}} </div>
+                <div class="grid-item"> {{message.name}} </div>
+                <div class="grid-item"> {{message.sim_scores}} </div>
             {% endfor %}
         </div>
         <div id="tagChartDiv" style="visibility: {{ visibility }}";>
