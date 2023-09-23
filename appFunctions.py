@@ -37,12 +37,17 @@ def recipe_recommendations(recipe_name, clean_data, feature_matrix):
     recipe_data = pd.DataFrame(feature_matrix.loc[[recipe_index]])
     cosine_sim = cosine_similarity(recipe_data, feature_matrix)
     cosine_scores = pd.DataFrame(cosine_sim, index=[recipe_id], columns=clean_data['recipe_id']).T.drop(recipe_id)
-    recommended_ids = cosine_scores.nlargest(10, recipe_id).index
+    
+    # Create dataframe of cosine sim scores
+    recommended_ids = cosine_scores.nlargest(10, recipe_id)
+    recommended_ids['recipe_id'] = recommended_ids.index
+    recommended_ids = recommended_ids.rename(columns={recipe_id: 'sim_scores'})
     recommended_recipes = pd.DataFrame()
 
-    for id in recommended_ids:
+    for id in recommended_ids.index:
         recipe = clean_data[clean_data['recipe_id'] == id]
         recommended_recipes = pd.concat([recommended_recipes, recipe], ignore_index=True)
+    recommended_recipes = recommended_recipes.merge(recommended_ids['sim_scores'], how='left', on='recipe_id')
 
     return recommended_recipes.to_dict(orient='records')
 
