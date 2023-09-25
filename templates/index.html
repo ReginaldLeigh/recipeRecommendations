@@ -23,7 +23,7 @@
         <div class="grid-container" style="visibility: {{ visibility }}";>
             <div class="grid-item">Recipe ID</div>
             <div class="grid-item">Name</div>
-            <div class="grid-item">Score</div>
+            <div class="grid-item">Similarity Score</div>
             {% for message in results %}
                 <div class="grid-item"> {{message.recipe_id}} </div>
                 <div class="grid-item"> {{message.name}} </div>
