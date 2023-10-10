@@ -1,2 +1,2 @@
 # recipeRecommendations
-simple app to deliver recipe recommendations via K-NN machine learning model
+simple app to deliver recipe recommendations via cosine similarity machine learning model
